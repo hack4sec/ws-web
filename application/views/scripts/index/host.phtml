@@ -1,0 +1,170 @@
+<?
+$translates = [
+    'cms' => 'Скрипты',
+    'robots_txt' => '/robots.txt',
+    'ns' => 'Доменные имена',
+    'backups' => 'Резервные копии',
+    'dafs_dirs' => 'Найденные файлы',
+    'dafs_files' => 'Найденные директории',
+    'powered_by' => 'Фраза "Powered by"',
+    'encodings' => 'Кодировки',
+    'sitemap' => 'Карта сайта',
+    'ns_always_true' => 'IP возвращается на запрос любого поддомена',
+    'nf' => 'Код ответа при несуществующем объекте',
+    'headers' => 'Интересные заголовки'
+]
+?>
+<div id="tabs">
+    <ul>
+        <li><a href="#tabs-1">Карта URL</a></li>
+        <li><a href="#tabs-2">Информация</a></li>
+        <li><a href="#tabs-3">Запросы</a></li>
+    </ul>
+        <div id="tabs-1">
+            <div id="sitemap-<?=$this->host['id']?>-0">
+                <div onclick="loadSitemap(<?=$this->host['id']?>, 0, 1)"><?=$this->host['name']?></div><br/>
+                <div id="sitemap-content-<?=$this->host['id']?>-0"></div>
+            </div>
+        </div>
+        <div id="tabs-2">
+            <?foreach ($this->hostInfo as $field => $value):?>
+                <table width="80%" border="1">
+                    <tr>
+                        <td width="40%" valign="top"><?=$translates[$field]?></td>
+                        <td valign="top">
+                <?
+                    switch($field) {
+                        case 'cms':
+                            if ($value) {
+                                foreach ($value as $v) {
+                                    print "{$v->name}, {$v->percent}%<br />";
+                                }
+                            } else {
+                                print 'Нет информации';
+                            }
+                            break;
+                        case 'robots_txt':
+                            if ($value) {
+                                print 'Есть';
+                            } else {
+                                print 'Не найдено';
+                            }
+                            break;
+                        case 'ns_always_true':
+                            if (json_decode($value)) {
+                                print 'Да';
+                            } else {
+                                print 'Нет';
+                            }
+                            break;
+                        case 'nf':
+                            print "Файлы: {$value->files}<br />";
+                            print "Директории: {$value->dirs} <br />";
+                            break;
+                        case 'powered_by':
+                            if ($value) {
+                                print implode("<br />", array_map('htmlspecialchars', $value));
+                            } else {
+                                print 'Не найдено';
+                            }
+                            break;
+                        case 'headers':
+                            if ($value) {
+                                foreach ($value as $v) {
+                                    print "{$v->name}: {$v->value}<br />";
+                                }
+                            } else {
+                                print 'Не найдено';
+                            }
+                            break;
+                        case 'dafs_files':
+                        case 'dafs_dirs':
+                        case 'backups':
+                            if ($value) {
+                                foreach ($value as $v) {
+                                    print "({$v->code}) {$v->url}<br />";
+                                }
+                            } else {
+                                print 'Не найдено';
+                            }
+                            break;
+                        case 'encodings':
+                            print "HTTP: {$value->http}<br />HTML: {$value->html}";
+                            break;
+                        case 'sitemap':
+                            if ($value) {
+                                print "Добавлено URL: {$value->added}<br />";
+                                print implode("<br/>", $value->links);
+                            } else {
+                                print 'Не найдено';
+                            }
+                            break;
+                        case 'ns':
+                            if ($value) {
+                                foreach ($value as $v) {
+                                    print "({$v->ip}) {$v->name}<br />";
+                                }
+                            } else {
+                                print 'Не найдено';
+                            }
+                            break;
+                    }
+                ?>
+                        </td>
+                    </tr>
+                </table>
+            <?endforeach?>
+        </div>
+        <div id="tabs-3">
+            <table width="100%" border="1">
+                <tr>
+                    <th colspan="6">Запросы</th>
+                </tr>
+                <tr>
+                    <th>Метод</th>
+                    <th>Протокол</th>
+                    <th>Заголовки</th>
+                    <th>URL</th>
+                    <th>Нашёл</th>
+                    <th>Описание</th>
+                </tr>
+                <?foreach ($this->requests as $request):?>
+                <tr>
+                    <td>
+                        <?=$request->method?>
+                    </td>
+                    <td>
+                        <?=$request->protocol?>
+                    </td>
+                    <td>
+                        <?
+                            $headers = json_decode($request->headers);
+                            foreach (get_object_vars($headers) as $header => $value) {
+                                #print "$header: {$headers->$header}<br/>";
+                                print "$header: $value<br/>";
+                            }
+                        ?>
+                    </td>
+                    <td>
+                        <? echo (strlen($request->params) ? "{$request->path}?{$request->params}" : $request->path) ?>
+                    </td>
+                    <td>
+                        <?=$request->founder?>
+                    </td>
+                    <td>
+                        <?=$request->comment?>
+                    </td>
+                </tr>
+                <?endforeach?>
+            </table>
+        </div>
+</div>
+<script>
+
+    $(function() {
+        $( "#tabs" ).tabs();
+        loadSitemap(<?=$this->host['id']?>, 0, 1)
+    });
+
+</script>
+

@@ -1,0 +1,39 @@
+<div id="tabs">
+    <ul>
+        <? foreach($this->projects as $project): ?>
+            <li><a href="#tabs-<?=$project['id']?>"><?=$project['name']?></a></li>
+        <? endforeach ?>
+    </ul>
+    <? foreach($this->projects as $project): ?>
+        <div id="tabs-<?=$project['id']?>">
+            <div>Описание: &quot;<?=$project['descr']?>&quot;</div>
+            <br/><br/>
+            <div id="hostsTabs<?=$project['id']?>">
+                <ul>
+                    <? foreach($project['hosts'] as $host): ?>
+                        <li><a href="#tabs-host-<?=$project['id']?>-<?=$host['id']?>"><?=$host['name']?></a></li>
+                    <? endforeach ?>
+                </ul>
+                <? foreach($project['hosts'] as $host): ?>
+                <div id="tabs-host-<?=$project['id']?>-<?=$host['id']?>">
+
+                    <div id="sitemap-<?=$host['id']?>-0">
+                        <div onclick="loadSitemap(<?=$host['id']?>, 0, 1)"><?=$host['name']?></div><br/>
+                        <div id="sitemap-content-<?=$host['id']?>-0"></div>
+                    </div>
+                </div>
+                <? endforeach ?>
+            </div>
+
+        </div>
+    <? endforeach ?>
+</div>
+<script>
+
+    $(function() {
+        $( "#tabs" ).tabs();
+        $( "*[id^='tabs']" ).tabs();
+    });
+
+</script>
+

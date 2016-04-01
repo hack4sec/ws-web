@@ -1,0 +1,16 @@
+<table width="80%" border="1">
+    <tr>
+        <th colspan="2">Проекты</th>
+    </tr>
+    <tr>
+        <th>Название</th>
+        <th>Описание</th>
+    </tr>
+        <? foreach($this->projects as $project): ?>
+    <tr>
+        <td><a href="/index/hosts/project/<?=$project['id']?>/"><?=$project['name']?></a></td>
+        <td><?=$project['descr']?></td>
+    </tr>
+        <? endforeach ?>
+
+</table>

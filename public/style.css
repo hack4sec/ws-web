@@ -1,0 +1,10 @@
+.hand {
+    cursor: pointer;
+    cursor: hand;
+}
+
+div, td {
+    font-family: Arial, "Times New Roman", Times, serif;
+    font-size: 14px;
+}
+
