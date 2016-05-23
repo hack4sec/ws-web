@@ -1,24 +1,24 @@
 <?
 $translates = [
-    'cms' => 'Скрипты',
+    'cms' => $this->translate('L_SCRIPTS'),
     'robots_txt' => '/robots.txt',
-    'ns' => 'Доменные имена',
-    'backups' => 'Резервные копии',
-    'dafs_dirs' => 'Найденные файлы',
-    'dafs_files' => 'Найденные директории',
-    'powered_by' => 'Фраза "Powered by"',
-    'encodings' => 'Кодировки',
-    'sitemap' => 'Карта сайта',
-    'ns_always_true' => 'IP возвращается на запрос любого поддомена',
-    'nf' => 'Код ответа при несуществующем объекте',
-    'headers' => 'Интересные заголовки'
+    'ns' => $this->translate('L_DOMAINS'),
+    'backups' => $this->translate('L_BACKUPS'),
+    'dafs_dirs' => $this->translate('L_FOUND_FILES'),
+    'dafs_files' => $this->translate('L_FOUND_DIRS'),
+    'powered_by' => $this->translate('L_POWERED_BY_PHRASE'),
+    'encodings' => $this->translate('L_ENCODINGS'),
+    'sitemap' => $this->translate('L_SITEMAP'),
+    'ns_always_true' => $this->translate('L_DNS_ALWAYS_TRUE'),
+    'nf' => $this->translate('L_404_RESPONSE'),
+    'headers' => $this->translate('L_INTEREST_HEADERS'),
 ]
 ?>
 <div id="tabs">
     <ul>
-        <li><a href="#tabs-1">Карта URL</a></li>
-        <li><a href="#tabs-2">Информация</a></li>
-        <li><a href="#tabs-3">Запросы</a></li>
+        <li><a href="#tabs-1"><?=$this->translate('L_URL_MAP')?></a></li>
+        <li><a href="#tabs-2"><?=$this->translate('L_INFO')?></a></li>
+        <li><a href="#tabs-3"><?=$this->translate('L_REQUESTS')?></a></li>
     </ul>
         <div id="tabs-1">
             <div id="sitemap-<?=$this->host['id']?>-0">
@@ -40,32 +40,32 @@ $translates = [
                                     print "{$v->name}, {$v->percent}%<br />";
                                 }
                             } else {
-                                print 'Нет информации';
+                                print $this->translate('L_NO_INFO');
                             }
                             break;
                         case 'robots_txt':
                             if ($value) {
-                                print 'Есть';
+                                print $this->translate('L_YES_2');
                             } else {
-                                print 'Не найдено';
+                                print $this->translate('L_NOT_FOUND');
                             }
                             break;
                         case 'ns_always_true':
                             if (json_decode($value)) {
-                                print 'Да';
+                                print $this->translate('L_YES_1');
                             } else {
-                                print 'Нет';
+                                print $this->translate('L_NO');
                             }
                             break;
                         case 'nf':
-                            print "Файлы: {$value->files}<br />";
-                            print "Директории: {$value->dirs} <br />";
+                            print "{$this->translate('L_FILES')}: {$value->files}<br />";
+                            print "{$this->translate('L_DIRS')}: {$value->dirs} <br />";
                             break;
                         case 'powered_by':
                             if ($value) {
                                 print implode("<br />", array_map('htmlspecialchars', $value));
                             } else {
-                                print 'Не найдено';
+                                print $this->translate('L_NOT_FOUND');
                             }
                             break;
                         case 'headers':
@@ -74,7 +74,7 @@ $translates = [
                                     print "{$v->name}: {$v->value}<br />";
                                 }
                             } else {
-                                print 'Не найдено';
+                                print $this->translate('L_NOT_FOUND');
                             }
                             break;
                         case 'dafs_files':
@@ -85,7 +85,7 @@ $translates = [
                                     print "({$v->code}) {$v->url}<br />";
                                 }
                             } else {
-                                print 'Не найдено';
+                                print $this->translate('L_NOT_FOUND');
                             }
                             break;
                         case 'encodings':
@@ -93,10 +93,10 @@ $translates = [
                             break;
                         case 'sitemap':
                             if ($value) {
-                                print "Добавлено URL: {$value->added}<br />";
+                                print "{$this->translate('L_URL_ADDED')}: {$value->added}<br />";
                                 print implode("<br/>", $value->links);
                             } else {
-                                print 'Не найдено';
+                                print $this->translate('L_NOT_FOUND');
                             }
                             break;
                         case 'ns':
@@ -105,7 +105,7 @@ $translates = [
                                     print "({$v->ip}) {$v->name}<br />";
                                 }
                             } else {
-                                print 'Не найдено';
+                                print $this->translate('L_NOT_FOUND');
                             }
                             break;
                     }
@@ -118,15 +118,15 @@ $translates = [
         <div id="tabs-3">
             <table width="100%" border="1">
                 <tr>
-                    <th colspan="6">Запросы</th>
+                    <th colspan="6"><?=$this->translate('L_REQUESTS')?></th>
                 </tr>
                 <tr>
-                    <th>Метод</th>
-                    <th>Протокол</th>
-                    <th>Заголовки</th>
-                    <th>URL</th>
-                    <th>Нашёл</th>
-                    <th>Описание</th>
+                    <th><?=$this->translate('L_METHOD')?></th>
+                    <th><?=$this->translate('L_PROTOCOL')?></th>
+                    <th><?=$this->translate('L_HEADERS')?></th>
+                    <th><?=$this->translate('L_URL')?></th>
+                    <th><?=$this->translate('L_FINDER')?></th>
+                    <th><?=$this->translate('L_DESCRIPTION')?></th>
                 </tr>
                 <?foreach ($this->requests as $request):?>
                 <tr>

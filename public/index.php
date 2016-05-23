@@ -22,6 +22,9 @@ require_once 'Zend/Loader/Autoloader.php';
 $autoloader = Zend_Loader_Autoloader::getInstance();
 $autoloader->setFallbackAutoloader(true);
 
+$config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', APPLICATION_ENV);
+Zend_Registry::set('config', $config);
+
 // Create application, bootstrap, and run
 $application = new Zend_Application(
     APPLICATION_ENV,
