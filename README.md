@@ -11,6 +11,6 @@ Docs en [http://hack4sec.pro/wiki/index.php/WebScout_en](http://hack4sec.pro/wik
 Docs ru [http://hack4sec.pro/wiki/index.php/WebScout](http://hack4sec.pro/wiki/index.php/WebScout)
 
 # Authors
-Anton Kuzmin (anton.kuzmin.russia@gmail.com) [http://anton-kuzmin.ru](http://anton-kuzmin.ru) (ru) [http://kuzya.pro](http://kuzya.pro) (en)
+Anton Kuzmin (anton.kuzmin.russia@gmail.com) [http://anton-kuzmin.ru](http://anton-kuzmin.ru) (ru) [http://anton-kuzmin.pro](http://anton-kuzmin.pro) (en)
 
 
